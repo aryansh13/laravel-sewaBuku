@@ -41,4 +41,10 @@ class PeminjamanController extends Controller
         return view('peminjaman.detail_peminjam', compact('halaman', 'data_peminjam'));
     }
 
+    public function detail_buku($id){
+        $halaman = 'data_buku';
+        $data_buku = DataBuku::findOrFail($id);
+        return view('peminjaman.detail_buku', compact('halaman', 'data_buku'));
+    }
+
 }
