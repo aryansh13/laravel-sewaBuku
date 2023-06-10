@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
     <div>
-        <h4>Tambah Data Peminjam</h4>
+        <h4>Tambah Peminjam</h4>
 
         <form method="POST" action="{{ route('data_peminjam.store') }}">
         @csrf
