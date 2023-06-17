@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Telepon;
 use App\Models\JenisKelamin;
 use Session;
+use Storage;
 
 class DataPeminjamController extends Controller
 {
@@ -29,6 +30,9 @@ class DataPeminjamController extends Controller
             'tanggal_lahir' => 'required|date'
         ]);
 
+        $this->validate($request, [
+            'foto' => 'required|image|mimes:jpeg,jpg,png',
+        ]);
 
         $data_peminjam = new DataPeminjam;
         $data_peminjam->kode_peminjam = $request->kode_peminjam;

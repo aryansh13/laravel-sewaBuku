@@ -11,7 +11,7 @@
             </ul>
         @endif
 
-        <form method="POST" action="{{ route('data_peminjam.store') }}">
+        <form method="POST" action="{{ route('data_peminjam.store') }}" enctype="multipart/form-data">
         @csrf
             <div class="form-group">
                 <label>Kode Peminjam</label>
@@ -47,6 +47,10 @@
                     </option>        
                         @endforeach
                 </select>
+            </div>
+            <div class="form-group">
+                <label>Foto</label>
+                <input type="file" name="foto" class="form-control">
             </div>
             <div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
