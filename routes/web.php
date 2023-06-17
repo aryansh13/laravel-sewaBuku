@@ -114,6 +114,8 @@ Route::post('data_peminjam/update/{id}', 'App\Http\Controllers\DataPeminjamContr
 
 Route::post('data_peminjam/delete/{id}', 'App\Http\Controllers\DataPeminjamController@destroy')->name('data_peminjam.destroy');
 
+Route::get('data_peminjam/search', 'App\Http\Controllers\DataPeminjamController@search')->name('data_peminjam.search');
+
 Route::get('lihat_data_peminjam', 'App\Http\Controllers\PeminjamController@lihat_data_peminjam');
 
 Route::get('peminjaman', 'App\Http\Controllers\PeminjamanController@index');
@@ -125,6 +127,7 @@ Route::post('peminjaman/store', 'App\Http\Controllers\PeminjamanController@store
 Route::get('peminjaman/detail_peminjam/{id}', 'App\Http\Controllers\PeminjamanController@detail_peminjam')->name('peminjaman.detail_peminjam');
 
 Route::get('peminjaman/detail_buku/{id}', 'App\Http\Controllers\PeminjamanController@detail_buku')->name('peminjaman.detail_buku');
+
 
 
 

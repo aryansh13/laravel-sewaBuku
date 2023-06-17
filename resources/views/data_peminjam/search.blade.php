@@ -1,5 +1,7 @@
 @extends('layout.master')
 @section('content')
+
+    @if(count($data_peminjam))
     <div class="container">
         <h4>Data Peminjam</h4>
 
@@ -51,10 +53,15 @@
         </table>
 
         <div class="pull-left">
-            <strong>
-                Jumlah Peminjam : {{ $jumlah_peminjam }}
-            </strong>
             <p>{{ $data_peminjam->links() }}</p>
         </div>
+
+@else
+        <div>
+            <h4>Data {{ $cari }} tidak ditemukan</h4>
+            <a href="/data_peminjam">Kembali</a>
+        </div>
+@endif
+
     </div>
 @endsection

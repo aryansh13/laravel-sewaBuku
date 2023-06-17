@@ -6,13 +6,15 @@ use App\Models\DataPeminjam;
 use Illuminate\Http\Request;
 use App\Models\Telepon;
 use App\Models\JenisKelamin;
+use Session;
 
 class DataPeminjamController extends Controller
 {
     public function index(){
-        $data_peminjam = DataPeminjam::all()->sortBy('nama_peminjam');
-        $jumlah_peminjam = $data_peminjam->count();
-        return view('data_peminjam.index', compact('jumlah_peminjam', 'data_peminjam'));
+        $jumlah_peminjam = DataPeminjam::count();
+        $data_peminjam = DataPeminjam::orderBy('id', 'asc')->paginate(5);
+        $no = 0;
+        return view('data_peminjam.index', compact('data_peminjam', 'no', 'jumlah_peminjam'));
     }
 
     public function create(){
@@ -21,6 +23,13 @@ class DataPeminjamController extends Controller
     }
 
     public function store(Request $request){
+        $this->validate($request, [
+            'kode_peminjam' => 'required|string',
+            'nama_peminjam' => 'required|string|max:30',
+            'tanggal_lahir' => 'required|date'
+        ]);
+
+
         $data_peminjam = new DataPeminjam;
         $data_peminjam->kode_peminjam = $request->kode_peminjam;
         $data_peminjam->nama_peminjam = $request->nama_peminjam;
@@ -33,6 +42,9 @@ class DataPeminjamController extends Controller
         $telepon = new Telepon;
         $telepon->nomor_telepon = $request->telepon;
         $data_peminjam->telepon()->save($telepon);
+
+        Session::flash('flash_message', 'Data Peminjam berhasil disimpan');
+
         return redirect('data_peminjam');
     }
 
@@ -74,13 +86,27 @@ class DataPeminjamController extends Controller
                 $data_peminjam->telepon()->save($telepon);
             }
         }
+
+        Session::flash('flash_message', 'Data Peminjam berhasil diupdate');
+
         return redirect('data_peminjam');
     }
 
     public function destroy($id){
         $data_peminjam = DataPeminjam::find($id);
         $data_peminjam->delete();
+
+        Session::flash('flash_message', 'Data Peminjam berhasil dihapus');
+    
         return redirect('data_peminjam');
+    }
+
+    public function search(Request $request){
+        $batas = 5;
+        $cari = $request->kata;
+        $data_peminjam = DataPeminjam::where('nama_peminjam', 'like', '%'.$cari.'%')->paginate($batas);
+        $no = $batas * ($data_peminjam->currentPage() -1);
+        return view('data_peminjam.search', compact('data_peminjam', 'no', 'cari'));
     }
 
     public function CobaCollection(){

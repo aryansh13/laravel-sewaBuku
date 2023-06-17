@@ -13,5 +13,7 @@
     @yield('content')
 
     <script src="{{ asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('js/data_peminjamapp.js')}}"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
 </body>
 </html>
