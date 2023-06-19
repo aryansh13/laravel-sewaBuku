@@ -36,6 +36,11 @@ return [
             'throw' => false,
         ],
 
+        'foto_peminjam'=> [
+            'driver' => 'local',
+            'root' => public_path('foto_peminjam'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

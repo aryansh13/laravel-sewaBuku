@@ -33,6 +33,9 @@ class DataPeminjamController extends Controller
         $this->validate($request, [
             'foto' => 'required|image|mimes:jpeg,jpg,png',
         ]);
+        $foto_peminjam = $request->foto;
+        $nama_file = time().'.'.$foto_peminjam->getClientOriginalExtension();
+        $foto_peminjam->move('foto_peminjam/', $nama_file);
 
         $data_peminjam = new DataPeminjam;
         $data_peminjam->kode_peminjam = $request->kode_peminjam;
@@ -41,6 +44,7 @@ class DataPeminjamController extends Controller
         $data_peminjam->tanggal_lahir = $request->tanggal_lahir;
         $data_peminjam->alamat = $request->alamat;
         $data_peminjam->pekerjaan = $request->pekerjaan;
+        $data_peminjam->foto = $nama_file;
         $data_peminjam->save();
 
         $telepon = new Telepon;
