@@ -45,6 +45,7 @@ class DataPeminjamController extends Controller
         $data_peminjam->alamat = $request->alamat;
         $data_peminjam->pekerjaan = $request->pekerjaan;
         $data_peminjam->foto = $nama_file;
+        
         $data_peminjam->save();
 
         $telepon = new Telepon;
@@ -67,13 +68,27 @@ class DataPeminjamController extends Controller
     
     public function update(Request $request, $id){
         $data_peminjam = DataPeminjam::find($id);
-        $data_peminjam->kode_peminjam = $request->kode_peminjam;
-        $data_peminjam->nama_peminjam = $request->nama_peminjam;
-        $data_peminjam->id_jenis_kelamin = $request->id_jenis_kelamin;
-        $data_peminjam->tanggal_lahir = $request->tanggal_lahir;
-        $data_peminjam->alamat = $request->alamat;
-        $data_peminjam->pekerjaan = $request->pekerjaan;
-        $data_peminjam->update();
+        if($request->has('foto')){
+            $foto_peminjam = $request->foto;
+            $nama_file = time().'.'.$foto_peminjam->getClientOriginalExtension();
+            $foto_peminjam->move('foto_peminjam/', $nama_file);
+            $data_peminjam->kode_peminjam = $request->kode_peminjam;
+            $data_peminjam->nama_peminjam = $request->nama_peminjam;
+            $data_peminjam->id_jenis_kelamin = $request->id_jenis_kelamin;
+            $data_peminjam->tanggal_lahir = $request->tanggal_lahir;
+            $data_peminjam->alamat = $request->alamat;
+            $data_peminjam->pekerjaan = $request->pekerjaan;
+            $data_peminjam->foto = $nama_file;
+            $data_peminjam->update();
+        }else{
+            $data_peminjam->kode_peminjam = $request->kode_peminjam;
+            $data_peminjam->nama_peminjam = $request->nama_peminjam;
+            $data_peminjam->id_jenis_kelamin = $request->id_jenis_kelamin;
+            $data_peminjam->tanggal_lahir = $request->tanggal_lahir;
+            $data_peminjam->alamat = $request->alamat;
+            $data_peminjam->pekerjaan = $request->pekerjaan;
+            $data_peminjam->update();
+        }
 
         //update no telepon, jika sebelum nya sudah ada
         if($data_peminjam->telepon){

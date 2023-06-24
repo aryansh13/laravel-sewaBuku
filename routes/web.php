@@ -1,5 +1,8 @@
 <?php
+
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('auth/login');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+// Route::name('kuliah')->group(function () {
+//     Route::get('Teknologi Rekayasa Komputer', function () {
+//         return 'Kuliah di prodi Teknologi Rekayasa Komputer';
+//     });
+// });
 
 Route::get('coba_collection', 'App\Http\Controllers\DataPeminjamController@CobaCollection');
 
@@ -32,77 +48,7 @@ Route::get('collection_toarray', 'App\Http\Controllers\DataPeminjamController@co
 
 Route::get('collection_tojson', 'App\Http\Controllers\DataPeminjamController@collection_tojson');
 
-Route::get('/', 'App\Http\Controllers\IndexController@index');
-
-Route::get('biodata', function () {
-    return 'Nama : ALif<br> NIM : 43321117 <br> Alamat : YTTA <br> Hobi : BERBURU SAMBO';
-});
-
-Route::get('mahasiswa/{prodi}', function ($prodi) {
-    return 'Mahasiswa Program Studi : '.$prodi;
-});
-
-Route::get('mahasiswa2/{prodi?}', function ($prodi=null) {
-    if($prodi == null)
-        return "Data Program Studi Kosong";
-    return 'Mahasiswa Program Studi : '.$prodi;
-});
-
-Route::get('mahasiswa3/{prodi?}', function ($prodi="Teknologi Rekayasa Komputer") {
-    return 'Mahasiswa Program Studi : '.$prodi;
-});
-
-Route::get('biodata2', function () {
-    return view('biodata2');
-});
-
-Route::group([], function () {
-    Route::get('/pertama', function () {
-        echo "route pertama";
-    });
-    Route::get('/kedua', function () {
-        echo "route kedua";
-    });
-    Route::get('/ketiga', function () {
-        echo "route ketiga";
-    });
-});
-
-Route::group(['prefix' => 'latihan'], function () {
-    Route::get('/satu', function () {
-        echo "latihan 1";
-    });
-    Route::get('/dua', function () {
-        echo "latihan 2";
-    });
-    Route::get('/tiga', function () {
-        echo "latihan 3";
-    });
-});
-
-Route::group(array('prefix' => 'admin'), function () {
-    Route::get('/', function () {
-        return 'Halaman Home Admin';
-    });
-    Route::get('post', function () {
-        return 'Halaman input data buku';
-    });
-    Route::get('post/simpan', function () {
-        return 'data berhasil disimpan';
-    });
-});
-
-Route::name('kuliah')->group(function () {
-    Route::get('Teknologi Rekayasa Komputer', function () {
-        return 'Kuliah di prodi Teknologi Rekayasa Komputer';
-    });
-});
-
-Route::get('home', function () {
-    return view('home');
-});
-
-Route::get('data_peminjam', 'App\Http\Controllers\DataPeminjamController@index');
+Route::get('data_peminjam', 'App\Http\Controllers\DataPeminjamController@index')->name('data_peminjam.index');
 
 Route::get('data_peminjam/create', 'App\Http\Controllers\DataPeminjamController@create')->name('data_peminjam.create');
 
@@ -118,7 +64,7 @@ Route::get('data_peminjam/search', 'App\Http\Controllers\DataPeminjamController@
 
 Route::get('lihat_data_peminjam', 'App\Http\Controllers\PeminjamController@lihat_data_peminjam');
 
-Route::get('peminjaman', 'App\Http\Controllers\PeminjamanController@index');
+Route::get('peminjaman', 'App\Http\Controllers\PeminjamanController@index')->name('peminjaman.index');
 
 Route::get('peminjaman/create', 'App\Http\Controllers\PeminjamanController@create')->name('peminjaman.create');
 
@@ -128,9 +74,10 @@ Route::get('peminjaman/detail_peminjam/{id}', 'App\Http\Controllers\PeminjamanCo
 
 Route::get('peminjaman/detail_buku/{id}', 'App\Http\Controllers\PeminjamanController@detail_buku')->name('peminjaman.detail_buku');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-
-
-
-
-
+require __DIR__.'/auth.php';

@@ -20,6 +20,7 @@
                     <th>Alamat</th>
                     <th>Pekerjaan</th>
                     <th>Nomor Telepon</th>
+                    <th>Foto</th>
                     <th>Edit</th>
                     <th>Hapus</th>
                 </tr>
@@ -38,11 +39,18 @@
                                 $peminjam->telepon['nomor_telepon']:'-'
                         }}
                         </td>
+                        <td>
+                            @if (empty($peminjam->foto))
+                                <img src="{{ asset('foto_peminjam/foto_peminjam_kosong.jpeg') }}" alt="" style="width:50px;height:60px;">
+                                @else
+                                <img src="{{ asset('foto_peminjam/'.$peminjam->foto) }}" alt="" style="width:50px;height:60px;">
+                            @endif
+                        </td>
                         <td><a href="{{ route('data_peminjam.edit', $peminjam->id) }}" class="btn btn-warning btn-sm">Edit</a></td>
                         <td>
                             <form action="{{ route('data_peminjam.destroy', $peminjam->id) }}" method="POST">
                                 @csrf
-                                    <button class="btn btn-warning btn-sm" onclick="return confirm('Anda yakin ingin mengahpus data ini?')">Hapus</button>    
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin mengahpus data ini?')">Hapus</button>    
                             </form>
                         </td>
                     </tr>
