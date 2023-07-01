@@ -12,7 +12,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Transaksi Data Peminjam</a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('user.index') }}">User</a>
+          </li>
         </ul>
         <div class="me-3">
           <a class="btn btn-danger btn-sm" href="{{ route('logout') }}" onclick="event.preventDefault();

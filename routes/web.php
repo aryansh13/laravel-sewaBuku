@@ -28,6 +28,18 @@ Route::get('/dashboard', function () {
 //     });
 // });
 
+Route::get('user', 'App\Http\Controllers\UserController@index')->name('user.index');
+
+Route::get('user/create', 'App\Http\Controllers\UserController@create')->name('user.create');
+
+Route::post('user/store', 'App\Http\Controllers\UserController@store')->name('user.store');
+
+Route::get('user/edit/{id}', 'App\Http\Controllers\UserController@edit')->name('user.edit');
+
+Route::post('user/update/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
+
+Route::post('user/destroy/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');
+
 Route::get('coba_collection', 'App\Http\Controllers\DataPeminjamController@CobaCollection');
 
 Route::get('collection_first', 'App\Http\Controllers\DataPeminjamController@collection_first');
