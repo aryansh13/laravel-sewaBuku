@@ -2,24 +2,29 @@
 @section('content')
 
     <div class="container">
-        <form method="POST" action="{{ route('login') }}">
-        @csrf
-            <div class="form-group row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="email">
-                </div>
+        <div class="card">
+            <div class="card-header">{{ __('Login') }}</div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('login') }}">
+                @csrf
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-5">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-5">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
-                </div>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-        </form>
+    </div>
     </div>
 @endsection
 {{-- <x-guest-layout>

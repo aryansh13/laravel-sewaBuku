@@ -19,12 +19,12 @@
                 @foreach ($user_list as $user)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $user-nama }}</td>
+                        <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user-level }}</td>
-                        <td><a href="{{ route('user.edit', $user-id) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td>{{ $user->level }}</td>
+                        <td><a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a></td>
                         <td>
-                            <form action="{{ route('user.destroy', $user-id) }}" method="POST">
+                            <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                 @csrf
                                 <button class="btn btn-warning btn-sm"
                                 onclick="return confirm('apakah anda yakin ingin menghapus data ini?')">Hapus</button>
@@ -38,7 +38,7 @@
             <strong>
                 Jumlah Peminjam : {{ $jumlah_user }}
             </strong>
-            <p>{{ $user_list-links() }}</p>
+            <p>{{ $user_list->links() }}</p>
         </div>
     </div>
 @endsection

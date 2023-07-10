@@ -1,6 +1,7 @@
 @extends('layout.master')
 @section('content')
-    <div>
+    <div class="container">
+        <div class="col-md-8">
         <h4>Edit Data Peminjam</h4>
 
         <form method="POST" action="{{ route('data_peminjam.update', $peminjam->id) }}" enctype="multipart/form-data">
@@ -48,5 +49,6 @@
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>
+        </div>
     </div>
 @endsection

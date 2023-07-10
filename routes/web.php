@@ -28,17 +28,6 @@ Route::get('/dashboard', function () {
 //     });
 // });
 
-Route::get('user', 'App\Http\Controllers\UserController@index')->name('user.index');
-
-Route::get('user/create', 'App\Http\Controllers\UserController@create')->name('user.create');
-
-Route::post('user/store', 'App\Http\Controllers\UserController@store')->name('user.store');
-
-Route::get('user/edit/{id}', 'App\Http\Controllers\UserController@edit')->name('user.edit');
-
-Route::post('user/update/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
-
-Route::post('user/destroy/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');
 
 Route::get('coba_collection', 'App\Http\Controllers\DataPeminjamController@CobaCollection');
 
@@ -74,6 +63,8 @@ Route::post('data_peminjam/delete/{id}', 'App\Http\Controllers\DataPeminjamContr
 
 Route::get('data_peminjam/search', 'App\Http\Controllers\DataPeminjamController@search')->name('data_peminjam.search');
 
+Route::get('data_peminjam/data_peminjam_pdf', 'App\Http\Controllers\DataPeminjamController@data_peminjam_pdf')->name('data_peminjam.data_peminjam_pdf');
+
 Route::get('lihat_data_peminjam', 'App\Http\Controllers\PeminjamController@lihat_data_peminjam');
 
 Route::get('peminjaman', 'App\Http\Controllers\PeminjamanController@index')->name('peminjaman.index');
@@ -85,6 +76,30 @@ Route::post('peminjaman/store', 'App\Http\Controllers\PeminjamanController@store
 Route::get('peminjaman/detail_peminjam/{id}', 'App\Http\Controllers\PeminjamanController@detail_peminjam')->name('peminjaman.detail_peminjam');
 
 Route::get('peminjaman/detail_buku/{id}', 'App\Http\Controllers\PeminjamanController@detail_buku')->name('peminjaman.detail_buku');
+
+Route::get('user', 'App\Http\Controllers\UserController@index')->name('user.index');
+
+Route::get('user/create', 'App\Http\Controllers\UserController@create')->name('user.create');
+
+Route::post('user/store', 'App\Http\Controllers\UserController@store')->name('user.store');
+
+Route::get('user/edit/{id}', 'App\Http\Controllers\UserController@edit')->name('user.edit');
+
+Route::post('user/update/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
+
+Route::post('user/destroy/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');
+
+Route::get('buku', 'App\Http\Controllers\DataBukuController@index')->name('buku.index');
+
+Route::get('buku/create', 'App\Http\Controllers\DataBukuController@create')->name('buku.create');
+
+Route::post('buku/store', 'App\Http\Controllers\DataBukuController@store')->name('buku.store');
+
+Route::get('buku/edit{id}', 'App\Http\Controllers\DataBukuController@edit')->name('buku.edit');
+
+Route::post('buku/update{id}', 'App\Http\Controllers\DataBukuController@update')->name('buku.update');
+
+Route::post('buku/destroy{id}', 'App\Http\Controllers\DataBukuController@destroy')->name('buku.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

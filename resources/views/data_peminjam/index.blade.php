@@ -4,9 +4,8 @@
         <h4>Data Peminjam</h4>
 
         @include('_partial/flash_message')
-
-        <p align="right"><a href="{{ route('data_peminjam.create') }}" class="btn btn-primary">Tambah Data Peminjam</a></p>
-        <form action="{{ route('data_peminjam.search') }}" action="get">@csrf
+        <p align="left"><a href="{{ route('data_peminjam.data_peminjam_pdf') }}" class="btn btn-primary">Download Data Peminjam</a></p>
+        <form action="{{ route('data_peminjam.search') }}" method="get">@csrf
             <input type="text" name="kata" placeholder="Cari..">
         </form>
         <table class="table table-striped">

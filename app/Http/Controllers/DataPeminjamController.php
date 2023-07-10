@@ -8,9 +8,22 @@ use App\Models\Telepon;
 use App\Models\JenisKelamin;
 use Session;
 use Storage;
+use App\Models\User;
+use PDF;
 
 class DataPeminjamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function data_peminjam_pdf(){
+        $data_peminjam = DataPeminjam::all();
+        $pdf = PDF::loadview('data_peminjam/data_peminjam_pdf', ['data_peminjam' => $data_peminjam]);
+        return $pdf->download('laporan.pdf');
+    }
+    
     public function index(){
         $jumlah_peminjam = DataPeminjam::count();
         $data_peminjam = DataPeminjam::orderBy('id', 'asc')->paginate(5);
@@ -45,6 +58,7 @@ class DataPeminjamController extends Controller
         $data_peminjam->alamat = $request->alamat;
         $data_peminjam->pekerjaan = $request->pekerjaan;
         $data_peminjam->foto = $nama_file;
+        $data_peminjam->user_id = $request->user_id;
         
         $data_peminjam->save();
 
@@ -80,6 +94,12 @@ class DataPeminjamController extends Controller
             $data_peminjam->pekerjaan = $request->pekerjaan;
             $data_peminjam->foto = $nama_file;
             $data_peminjam->update();
+            //ketika kolom name pada tabel nama_peminjam di edit maka kolom user juga ikut berubah
+            $cari_user_id = DataPeminjam::where('id', $id)->pluck('user_id');
+            $user = User::where('id', $cari_user_id);
+            $user->update([
+                'name' => $request->nama_peminjam,
+            ]);
         }else{
             $data_peminjam->kode_peminjam = $request->kode_peminjam;
             $data_peminjam->nama_peminjam = $request->nama_peminjam;
@@ -88,6 +108,13 @@ class DataPeminjamController extends Controller
             $data_peminjam->alamat = $request->alamat;
             $data_peminjam->pekerjaan = $request->pekerjaan;
             $data_peminjam->update();
+            //ketika kolom name pada tabel nama_peminjam di edit
+            //maka kolom user juga ikut berubah
+            $cari_user_id = DataPeminjam::where('id', $id)->pluck('user_id');
+            $user = User::where('id', $cari_user_id);
+            $user->update([
+                'name' => $request->nama_peminjam,
+            ]);
         }
 
         //update no telepon, jika sebelum nya sudah ada
@@ -116,11 +143,16 @@ class DataPeminjamController extends Controller
     }
 
     public function destroy($id){
+        //menghapus data user apabila data_peminjam dihapus
+        $cari_user_id = DataPeminjam::where('id', $id)->pluck('user_id');
+        $user_id = User::where('id', $cari_user_id);
+        $user_id->delete();
+        //menghapus data pada tabel data_peminjam
         $data_peminjam = DataPeminjam::find($id);
         $data_peminjam->delete();
 
         Session::flash('flash_message', 'Data Peminjam berhasil dihapus');
-    
+        Session::flash('penting', true);
         return redirect('data_peminjam');
     }
 
@@ -131,6 +163,8 @@ class DataPeminjamController extends Controller
         $no = $batas * ($data_peminjam->currentPage() -1);
         return view('data_peminjam.search', compact('data_peminjam', 'no', 'cari'));
     }
+
+
 
     public function CobaCollection(){
         $daftar = ['Budi Sujono',

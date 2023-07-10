@@ -6,23 +6,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          @if (Auth::check() && Auth::user())
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Data Peminjam</a>
+            <a aria-current="page" href="{{ route('buku.index') }}" class="nav-link">Data Buku</a>
+          </li>
+          @endif
+          @if (Auth::check() && Auth::user()->level == 'admin')
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('data_peminjam.index') }}">Data Peminjam</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Transaksi Data Peminjam</a>
+            <a class="nav-link" href="{{ route('peminjaman.index') }}">Transaksi Data Peminjam</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('user.index') }}">User</a>
           </li>
-        </ul>
-        <div class="me-3">
-          <a class="btn btn-danger btn-sm" href="{{ route('logout') }}" onclick="event.preventDefault();
+          @endif
+          <li class="nav-item">
+            <a class="btn btn-danger btn-sm" href="{{ route('logout') }}" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-          <form action="{{ route('logout') }}" method="POST" class="d-one">
+          <form action="{{ route('logout') }}" method="post" class="d-one" id="logout-form">
             @csrf
           </form>
-        </div>
+          </li>
+        </ul>
         <div>
           @if (Auth::check())
               <b class="me-2">{{ "Hai, ". Auth::user()->name }}</b>

@@ -1,6 +1,7 @@
 @extends('layout.master')
 @section('content')
-    <div>
+    <div class="container">
+        <div class="col-md-8">
         <h4>Tambah Data Peminjam</h4>
 
         @if (count($errors) > 0)
@@ -12,6 +13,7 @@
         @endif
 
         <form method="POST" action="{{ route('data_peminjam.store') }}" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" class="form-control" value="{{ $user_id }}">
         @csrf
             <div class="form-group">
                 <label>Kode Peminjam</label>
@@ -57,4 +59,5 @@
             </div>
         </form>
     </div>
+</div>
 @endsection
